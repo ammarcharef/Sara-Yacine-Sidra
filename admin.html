@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة - منصة الربح</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body class="dashboard-container">
+    <nav class="navbar">
+        <div class="navbar-brand">لوحة الإدارة</div>
+        <div class="user-menu">
+            <span id="adminName">مسؤول</span>
+            <a href="dashboard.html" style="color: white; margin-left: 15px;">العودة للمستخدم</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-content">
+        <div class="admin-stats">
+            <h2>نظرة عامة على المنصة</h2>
+            <div class="stats-grid">
+                <div class="stat-card admin-card">
+                    <h3>إجمالي المستخدمين</h3>
+                    <div class="value" id="totalUsers">0</div>
+                </div>
+                <div class="stat-card admin-card">
+                    <h3>المستخدمين النشطين</h3>
+                    <div class="value" id="activeUsers">0</div>
+                </div>
+                <div class="stat-card admin-card">
+                    <h3>إجمالي الإعلانات</h3>
+                    <div class="value" id="totalAds">0</div>
+                </div>
+                <div class="stat-card admin-card">
+                    <h3>الأرباح اليوم</h3>
+                    <div class="value" id="todayEarnings">0 دينار</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-tabs">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('users')">إدارة المستخدمين</button>
+                <button class="tab-btn" onclick="openTab('ads')">إدارة الإعلانات</button>
+                <button class="tab-btn" onclick="openTab('withdrawals')">طلبات السحب</button>
+                <button class="tab-btn" onclick="openTab('financial')">التقارير المالية</button>
+            </div>
+
+            <div id="users" class="tab-content active">
+                <h3>إدارة المستخدمين</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم المستخدم</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>النقاط</th>
+                                <th>الإحالات</th>
+                                <th>تاريخ التسجيل</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <tr>
+                                <td colspan="6">جاري تحميل البيانات...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="ads" class="tab-content">
+                <h3>إدارة الإعلانات</h3>
+                <button class="add-ad-btn" onclick="showAddAdForm()">إضافة إعلان جديد</button>
+                
+                <div class="ads-grid" id="adsGrid">
+                    <div class="ad-item">
+                        <img src="https://via.placeholder.com/150" alt="إعلان">
+                        <h4>عنوان الإعلان</h4>
+                        <p>وصف الإعلان</p>
+                        <div class="ad-actions">
+                            <button>تعديل</button>
+                            <button>حذف</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="withdrawals" class="tab-content">
+                <h3>طلبات السحب المعلقة</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم المستخدم</th>
+                                <th>المبلغ</th>
+                                <th>طريقة السحب</th>
+                                <th>رقم الحساب</th>
+                                <th>تاريخ الطلب</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="withdrawalsTable">
+                            <tr>
+                                <td colspan="6">لا توجد طلبات سحب معلقة</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="financial" class="tab-content">
+                <h3>التقارير المالية</h3>
+                <div class="financial-stats">
+                    <div class="stat-card">
+                        <h4>إجمالي الأرباح</h4>
+                        <div class="value" id="totalPlatformEarnings">0 دينار</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>إجمالي المسحوبات</h4>
+                        <div class="value" id="totalWithdrawals">0 دينار</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>صافي الأرباح</h4>
+                        <div class="value" id="netEarnings">0 دينار</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

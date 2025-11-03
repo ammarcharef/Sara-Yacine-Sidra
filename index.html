@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الربح من الإعلانات - الجزائر</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0078d4 0%, #6b69ae 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #000;
+        }
+
+        .profile-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: #0078d4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .profile-icon img {
+            width: 50px;
+            height: 50px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #000;
+            font-weight: 600;
+            font-size: 24px;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background: #106ebe;
+        }
+
+        .separator {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+            position: relative;
+            font-size: 14px;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .separator::before {
+            left: 0;
+        }
+
+        .separator::after {
+            right: 0;
+        }
+
+        .google-login-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .google-login-btn:hover {
+            background: #f5f5f5;
+            border-color: #ccc;
+        }
+
+        .google-login-btn img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .login-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-links a {
+            color: #0078d4;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+
+        .windows-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .windows-logo img {
+            width: 80px;
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="windows-logo">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 3.449L9.75 2.1V11.551H0V3.449ZM0 19.9V12.449H9.75V21.9L0 19.9ZM10.8 2.166L24 0V11.507H10.8V2.166ZM10.8 21.834V12.493H24V24L10.8 21.834Z" fill="#0078d4"/>
+                </svg>
+            </div>
+            
+            <h2>مرحباً بك</h2>
+            <p>سجل الدخول إلى حسابك</p>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="كلمة المرور" required>
+                </div>
+                
+                <button type="submit" class="login-btn">تسجيل الدخول</button>
+            </form>
+            
+            <div class="separator">أو</div>
+            
+            <button class="google-login-btn" onclick="loginWithGoogle()">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4=" alt="Google">
+                الدخول بحساب Google
+            </button>
+            
+            <div class="login-links">
+                <a href="register.html">إنشاء حساب جديد</a>
+                <a href="#">نسيت كلمة المرور؟</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script type="module" src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

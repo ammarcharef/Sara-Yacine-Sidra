@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - منصة الربح</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body class="dashboard-container">
+    <nav class="navbar">
+        <div class="navbar-brand">منصة الربح من الإعلانات</div>
+        <div class="user-menu">
+            <span id="userName">مستخدم</span>
+            <button onclick="logout()">تسجيل الخروج</button>
+        </div>
+    </nav>
+
+    <div class="dashboard-content">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>رصيد النقاط</h3>
+                <div class="value" id="pointsBalance">0 نقطة</div>
+            </div>
+            <div class="stat-card">
+                <h3>الأرباح اليوم</h3>
+                <div class="value" id="todayEarnings">0 دينار</div>
+            </div>
+            <div class="stat-card">
+                <h3>الإحالات</h3>
+                <div class="value" id="referralsCount">0 مستخدم</div>
+            </div>
+            <div class="stat-card">
+                <h3>الإعلانات اليوم</h3>
+                <div class="value" id="todayAds">0/15</div>
+            </div>
+        </div>
+
+        <div class="menu-grid">
+            <a href="ads.html" class="menu-item">
+                <div>📺</div>
+                <h3>مشاهدة الإعلانات</h3>
+                <p>اكسب النقاط من مشاهدة الإعلانات</p>
+            </a>
+            
+            <a href="referrals.html" class="menu-item">
+                <div>👥</div>
+                <h3>نظام الإحالة</h3>
+                <p>ادع أصدقاءك واكسب المزيد</p>
+            </a>
+            
+            <a href="withdrawal.html" class="menu-item">
+                <div>💳</div>
+                <h3>سحب الأرباح</h3>
+                <p>اسحب أموالك إلى حسابك</p>
+            </a>
+            
+            <a href="profile.html" class="menu-item">
+                <div>⚙️</div>
+                <h3>إعدادات الحساب</h3>
+                <p>إدارة معلومات حسابك</p>
+            </a>
+        </div>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

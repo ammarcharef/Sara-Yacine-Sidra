@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سحب الأرباح - منصة الربح</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body class="dashboard-container">
+    <nav class="navbar">
+        <div class="navbar-brand">سحب الأرباح</div>
+        <div class="user-menu">
+            <span id="userName">مستخدم</span>
+            <a href="dashboard.html" style="color: white; margin-left: 15px;">العودة</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-content">
+        <div class="withdrawal-info">
+            <div class="info-card">
+                <h3>رصيدك الحالي</h3>
+                <div class="balance" id="currentBalance">0 نقطة</div>
+                <div class="dinar-value" id="dinarValue">0 دينار جزائري</div>
+            </div>
+
+            <div class="info-card">
+                <h3>شروط السحب</h3>
+                <ul>
+                    <li>الحد الأدنى للسحب: 500 دينار (5000 نقطة)</li>
+                    <li>يتم السحب مرة واحدة أسبوعياً</li>
+                    <li>مدة المعالجة: 3-5 أيام عمل</li>
+                    <li>العمولة: بدون عمولة</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="withdrawal-form">
+            <h3>طلب سحب الأرباح</h3>
+            
+            <div class="form-group">
+                <label>طريقة السحب:</label>
+                <select id="withdrawalMethod">
+                    <option value="ccp">الحساب البريدي (CCP)</option>
+                    <option value="card">البطاقة الذهبية</option>
+                    <option value="baridimob">Baridi Mob</option>
+                    <option value="edahabia">EDAHABIA</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>رقم الحساب:</label>
+                <input type="text" id="accountNumber" readonly>
+                <small>سيتم استخدام الرقم المسجل في حسابك</small>
+            </div>
+
+            <div class="form-group">
+                <label>مبلغ السحب (بالدينار):</label>
+                <input type="number" id="withdrawalAmount" min="500" max="50000">
+                <small>الحد الأدنى: 500 دينار - الحد الأقصى: 50,000 دينار</small>
+            </div>
+
+            <div class="form-group">
+                <label>النقاط المطلوبة:</label>
+                <input type="text" id="requiredPoints" readonly>
+            </div>
+
+            <button class="withdrawal-btn" onclick="requestWithdrawal()">طلب السحب</button>
+        </div>
+
+        <div class="withdrawal-history">
+            <h3>سجل عمليات السحب</h3>
+            <div class="history-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>المبلغ</th>
+                            <th>الطريقة</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="withdrawalHistory">
+                        <tr>
+                            <td colspan="4">لا توجد عمليات سحب سابقة</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script src="js/withdrawal.js"></script>
+</body>
+</html>
