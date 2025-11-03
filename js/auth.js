@@ -14,12 +14,21 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
         
         try {
-            const { signInWithEmailAndPassword } = window.firebaseFunctions;
-            const userCredential = await signInWithEmailAndPassword(window.firebaseAuth, email, password);
+            console.log('محاولة تسجيل الدخول:', email);
             
-            // تحويل إلى لوحة التحكم
+            if (!window.firebaseAuth || !window.firebaseFunctions) {
+                throw new Error('Firebase not initialized properly');
+            }
+            
+            const userCredential = await window.firebaseFunctions.signInWithEmailAndPassword(
+                window.firebaseAuth, email, password
+            );
+            
+            console.log('تم التسجيل بنجاح:', userCredential.user.uid);
             window.location.href = 'dashboard.html';
+            
         } catch (error) {
+            console.error('خطأ في تسجيل الدخول:', error);
             // استعادة الزر
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
@@ -35,8 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 case 'auth/invalid-email':
                     errorMessage = 'بريد إلكتروني غير صحيح';
                     break;
+                case 'auth/invalid-login-credentials':
+                    errorMessage = 'بيانات الدخول غير صحيحة. تأكد من البريد وكلمة المرور';
+                    break;
+                case 'auth/too-many-requests':
+                    errorMessage = 'تم محاولة الدخول مرات كثيرة. حاول لاحقاً';
+                    break;
                 default:
-                    errorMessage = error.message;
+                    errorMessage = 'حدث خطأ غير متوقع: ' + error.message;
             }
             alert(errorMessage);
         }
@@ -59,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        if (password.length < 8) {
-            alert('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+        if (password.length < 6) {
+            alert('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
             return;
         }
         
@@ -71,11 +86,19 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
         
         try {
-            const { createUserWithEmailAndPassword, doc, setDoc, collection } = window.firebaseFunctions;
+            console.log('بدء إنشاء حساب جديد:', email);
+            
+            if (!window.firebaseAuth || !window.firebaseFunctions) {
+                throw new Error('Firebase not initialized properly');
+            }
             
             // إنشاء المستخدم في Firebase Auth
-            const userCredential = await createUserWithEmailAndPassword(window.firebaseAuth, email, password);
+            const userCredential = await window.firebaseFunctions.createUserWithEmailAndPassword(
+                window.firebaseAuth, email, password
+            );
             const user = userCredential.user;
+            
+            console.log('تم إنشاء المستخدم في Auth:', user.uid);
             
             // التحقق من كود الإحالة
             const urlParams = new URLSearchParams(window.location.search);
@@ -104,12 +127,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // حفظ بيانات المستخدم في Firestore
-            await setDoc(doc(window.firebaseDb, "users", user.uid), userData);
+            await window.firebaseFunctions.setDoc(
+                window.firebaseFunctions.doc(window.firebaseDb, "users", user.uid), 
+                userData
+            );
             
-            alert('تم إنشاء الحساب بنجاح! 🎉\nلقد حصلت على 100 نقطة ترحيبية');
-            window.location.href = 'dashboard.html';
+            console.log('تم حفظ بيانات المستخدم في Firestore');
+            
+            // رسالة نجاح واضحة مع تأخير
+            alert('🎉 تم إنشاء الحساب بنجاح! سيتم تحويلك إلى لوحة التحكم...');
+            
+            // تأخير بسيط ثم التحويل
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
             
         } catch (error) {
+            console.error('خطأ في إنشاء الحساب:', error);
             // استعادة الزر
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
@@ -125,8 +159,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 case 'auth/invalid-email':
                     errorMessage = 'بريد إلكتروني غير صحيح';
                     break;
+                case 'auth/operation-not-allowed':
+                    errorMessage = 'عملية التسجيل غير مسموحة حالياً';
+                    break;
+                case 'auth/network-request-failed':
+                    errorMessage = 'خطأ في الاتصال بالإنترنت';
+                    break;
                 default:
-                    errorMessage = error.message;
+                    errorMessage = 'حدث خطأ غير متوقع: ' + error.message;
             }
             alert(errorMessage);
         }
@@ -136,33 +176,47 @@ document.addEventListener('DOMContentLoaded', function() {
 // الدخول بحساب Google
 window.loginWithGoogle = async function() {
     try {
-        const { signInWithPopup, doc, setDoc, getDocs, query, where, collection } = window.firebaseFunctions;
+        console.log('محاولة الدخول بحساب Google');
         
-        const result = await signInWithPopup(window.firebaseAuth, window.firebaseGoogleProvider);
+        if (!window.firebaseAuth || !window.firebaseFunctions) {
+            throw new Error('Firebase not initialized properly');
+        }
+        
+        const result = await window.firebaseFunctions.signInWithPopup(
+            window.firebaseAuth, 
+            window.firebaseGoogleProvider
+        );
         const user = result.user;
+        
+        console.log('تم الدخول بحساب Google:', user.uid);
         
         // التحقق إذا كان المستخدم جديداً
         if (result._tokenResponse.isNewUser) {
+            console.log('إنشاء حساب جديد لـ Google user');
             // إنشاء حساب جديد مع بيانات Google
-            await setDoc(doc(window.firebaseDb, "users", user.uid), {
-                username: user.displayName || user.email.split('@')[0],
-                email: user.email,
-                phone: '',
-                cardNumber: '',
-                points: 100,
-                totalEarnings: 0,
-                referrals: 0,
-                referralCode: generateReferralCode(),
-                joinedAt: new Date(),
-                dailyAds: 0,
-                lastAdDate: null,
-                lastActive: new Date(),
-                isGoogleAccount: true
-            });
+            await window.firebaseFunctions.setDoc(
+                window.firebaseFunctions.doc(window.firebaseDb, "users", user.uid), 
+                {
+                    username: user.displayName || user.email.split('@')[0],
+                    email: user.email,
+                    phone: '',
+                    cardNumber: '',
+                    points: 100,
+                    totalEarnings: 0,
+                    referrals: 0,
+                    referralCode: generateReferralCode(),
+                    joinedAt: new Date(),
+                    dailyAds: 0,
+                    lastAdDate: null,
+                    lastActive: new Date(),
+                    isGoogleAccount: true
+                }
+            );
         }
         
         window.location.href = 'dashboard.html';
     } catch (error) {
+        console.error('خطأ في الدخول بحساب Google:', error);
         alert('خطأ في الدخول بحساب Google: ' + error.message);
     }
 }
@@ -180,13 +234,11 @@ function generateReferralCode() {
 // البحث عن المُحيل باستخدام كود الإحالة
 async function findReferrerId(referralCode) {
     try {
-        const { getDocs, query, where, collection } = window.firebaseFunctions;
-        
-        const q = query(
-            collection(window.firebaseDb, "users"), 
-            where("referralCode", "==", referralCode)
+        const q = window.firebaseFunctions.query(
+            window.firebaseFunctions.collection(window.firebaseDb, "users"), 
+            window.firebaseFunctions.where("referralCode", "==", referralCode)
         );
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await window.firebaseFunctions.getDocs(q);
         
         if (!querySnapshot.empty) {
             return querySnapshot.docs[0].id;
@@ -203,14 +255,15 @@ async function grantReferralBonus(referralCode, newUserId) {
     try {
         const referrerId = await findReferrerId(referralCode);
         if (referrerId) {
-            const { updateDoc, doc, increment } = window.firebaseFunctions;
-            
-            // منح 100 نقطة للمُحيل
-            await updateDoc(doc(window.firebaseDb, "users", referrerId), {
-                points: increment(100),
-                referrals: increment(1),
-                referralEarnings: increment(100)
-            });
+            await window.firebaseFunctions.updateDoc(
+                window.firebaseFunctions.doc(window.firebaseDb, "users", referrerId), 
+                {
+                    points: window.firebaseFunctions.increment(100),
+                    referrals: window.firebaseFunctions.increment(1),
+                    referralEarnings: window.firebaseFunctions.increment(100)
+                }
+            );
+            console.log('تم منح مكافأة الإحالة للمستخدم:', referrerId);
         }
     } catch (error) {
         console.error('Error granting referral bonus:', error);
@@ -218,20 +271,25 @@ async function grantReferralBonus(referralCode, newUserId) {
 }
 
 // مراقبة حالة المصادقة
-window.firebaseFunctions.onAuthStateChanged(window.firebaseAuth, (user) => {
-    if (user) {
-        // إذا كان المستخدم مسجل الدخول وهو في صفحة التسجيل، انقله للوحة التحكم
-        if (window.location.pathname.includes('index.html') || 
-            window.location.pathname.includes('register.html')) {
-            window.location.href = 'dashboard.html';
+if (window.firebaseFunctions && window.firebaseAuth) {
+    window.firebaseFunctions.onAuthStateChanged(window.firebaseAuth, (user) => {
+        console.log('حالة المصادقة تغيرت:', user ? user.uid : 'لا يوجد مستخدم');
+        if (user) {
+            // إذا كان المستخدم مسجل الدخول وهو في صفحة التسجيل، انقله للوحة التحكم
+            if (window.location.pathname.includes('index.html') || 
+                window.location.pathname.includes('register.html')) {
+                window.location.href = 'dashboard.html';
+            }
+        } else {
+            // إذا كان المستخدم غير مسجل الدخول وهو في صفحة محمية، انقله للتسجيل
+            if (window.location.pathname.includes('dashboard.html') ||
+                window.location.pathname.includes('ads.html') ||
+                window.location.pathname.includes('referrals.html') ||
+                window.location.pathname.includes('withdrawal.html')) {
+                window.location.href = 'index.html';
+            }
         }
-    } else {
-        // إذا كان المستخدم غير مسجل الدخول وهو في صفحة محمية، انقله للتسجيل
-        if (window.location.pathname.includes('dashboard.html') ||
-            window.location.pathname.includes('ads.html') ||
-            window.location.pathname.includes('referrals.html') ||
-            window.location.pathname.includes('withdrawal.html')) {
-            window.location.href = 'index.html';
-        }
-    }
-});
+    });
+} else {
+    console.error('لا يمكن تهيئة مراقبة حالة المصادقة - Firebase غير مهيئ');
+}
