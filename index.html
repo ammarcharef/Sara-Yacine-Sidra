@@ -37,22 +37,37 @@
             color: #000;
         }
 
-        .profile-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            background: #0078d4;
-            border-radius: 50%;
+        .platform-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #0078d4, #00a2ff);
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 8px 20px rgba(0, 120, 212, 0.3);
             color: white;
-            font-size: 24px;
         }
 
-        .profile-icon img {
-            width: 50px;
-            height: 50px;
+        .platform-logo h1 {
+            color: #0078d4;
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .platform-logo p {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
         }
 
         h2 {
@@ -177,25 +192,15 @@
         .login-links a:hover {
             text-decoration: underline;
         }
-
-        .windows-logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .windows-logo img {
-            width: 80px;
-            height: 80px;
-        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-card">
-            <div class="windows-logo">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 3.449L9.75 2.1V11.551H0V3.449ZM0 19.9V12.449H9.75V21.9L0 19.9ZM10.8 2.166L24 0V11.507H10.8V2.166ZM10.8 21.834V12.493H24V24L10.8 21.834Z" fill="#0078d4"/>
-                </svg>
+            <div class="platform-logo">
+                <div class="logo-icon">💎</div>
+                <h1>سارة ياسين سدرة</h1>
+                <p>منصة الربح من الإعلانات</p>
             </div>
             
             <h2>مرحباً بك</h2>
@@ -227,9 +232,6 @@
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script type="module" src="js/firebase-config.js"></script>
     <script src="js/auth.js"></script>
 </body>
